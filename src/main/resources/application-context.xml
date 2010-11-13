@@ -7,7 +7,7 @@
 		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
 	">
 
-	<bean id='movieService' class="de.bit.restdemo.service.MovieService" />
+	<bean id='movieService' class="net.wolfgangwerner.tutorial.jaxrs.service.MovieService" />
 	<bean id='jacksonProvider' class='org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider' />
 
 	<jaxrs:server address="http://localhost:9001">
