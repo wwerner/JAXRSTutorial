@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import net.wolfgangwerner.tutorial.jaxrs.model.Actor;
@@ -23,7 +24,7 @@ public class MovieService {
 		john.setName("John Belushi");
 
 		Actor carrie = new Actor();
-		john.setName("Carrie Fisher");
+		carrie.setName("Carrie Fisher");
 
 		Map<String, Actor> cast = new HashMap<String, Actor>();
 		cast.put("Jake Blues", john);
@@ -41,4 +42,9 @@ public class MovieService {
 	@Path("/hello")
 	@Produces("text/plain")
 	public String hello() { return "hello world"; }
+	
+	@GET
+	@Path("/movies/{id}")
+	@Produces({"application/json", "text/xml"})
+	public Movie getMovie(@PathParam("id") String id) { return movieStore.get(id); }
 }
