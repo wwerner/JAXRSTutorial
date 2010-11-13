@@ -1,12 +1,17 @@
 package net.wolfgangwerner.tutorial.jaxrs.service;
 
+import java.net.URI;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Response;
 
 import net.wolfgangwerner.tutorial.jaxrs.model.Actor;
 import net.wolfgangwerner.tutorial.jaxrs.model.Movie;
@@ -17,6 +22,9 @@ public class MovieService {
 	public MovieService() {
 		super();
 
+		Movie bluesBrothers = new Movie();
+		bluesBrothers.setTitle("Blues Brothers");
+		
 		Actor dan = new Actor();
 		dan.setName("Dan Aykroyd");
 
@@ -31,8 +39,7 @@ public class MovieService {
 		cast.put("Elwood Blues", dan);
 		cast.put("Mystery Woman", carrie);
 
-		Movie bluesBrothers = new Movie();
-		bluesBrothers.setTitle("Blues Brothers");
+
 		bluesBrothers.setCast(cast);
 
 		movieStore.put("bluesBrothers", bluesBrothers);
@@ -47,4 +54,17 @@ public class MovieService {
 	@Path("/movies/{id}")
 	@Produces({"application/json", "text/xml"})
 	public Movie getMovie(@PathParam("id") String id) { return movieStore.get(id); }
+	
+	@GET
+	@Path("/movies")
+	@Produces({"application/json", "text/xml"})
+	public Collection<Movie> getMovie() { return movieStore.values(); }
+	
+	@POST
+	@Path("/movies/{id}")
+	@Consumes({"application/json", "text/xml"})
+	public Response postMovie(@PathParam("id") String id, Movie movie) { 
+		movieStore.put(id, movie); 
+		return Response.created(URI.create("/movies/" + id)).build();	
+	}
 }
