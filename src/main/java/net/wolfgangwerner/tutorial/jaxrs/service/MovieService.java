@@ -1,10 +1,41 @@
 package net.wolfgangwerner.tutorial.jaxrs.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
+import net.wolfgangwerner.tutorial.jaxrs.model.Actor;
+import net.wolfgangwerner.tutorial.jaxrs.model.Movie;
+
 public class MovieService {
+	private Map<String, Movie> movieStore = new HashMap<String, Movie>();
+
+	public MovieService() {
+		super();
+
+		Actor dan = new Actor();
+		dan.setName("Dan Aykroyd");
+
+		Actor john = new Actor();
+		john.setName("John Belushi");
+
+		Actor carrie = new Actor();
+		john.setName("Carrie Fisher");
+
+		Map<String, Actor> cast = new HashMap<String, Actor>();
+		cast.put("Jake Blues", john);
+		cast.put("Elwood Blues", dan);
+		cast.put("Mystery Woman", carrie);
+
+		Movie bluesBrothers = new Movie();
+		bluesBrothers.setTitle("Blues Brothers");
+		bluesBrothers.setCast(cast);
+
+		movieStore.put("bluesBrothers", bluesBrothers);
+	}
 	
 	@GET
 	@Path("/hello")
